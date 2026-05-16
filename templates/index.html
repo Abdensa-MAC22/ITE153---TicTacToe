@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdensa Game Go</title>
+
+<style>
+/* ===================== RESET ===================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+    background:#b9652d;
+    overflow:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+    height:100vh;
+    position:relative;
+
+    background:
+    linear-gradient(rgba(255,255,255,.03), rgba(0,0,0,.03)),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.03), rgba(0,0,0,.03) 2px, transparent 2px, transparent 80px),
+    #b9652d;
+}
+
+/* ===================== SCREENS ===================== */
+.screen{
+    width:100%;
+    height:100%;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.screen.active{ display:flex; }
+
+/* ===================== TOP BAR ===================== */
+.top-bar{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:260px;
+    background:#ead9a2;
+    padding:18px;
+    border-radius:0 0 25px 25px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    box-shadow:0 6px 0 #d8c48c;
+}
+
+.top-btn{
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:15px;
+    background:#9cdc45;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+    box-shadow:0 5px 0 #5d8d21;
+}
+
+/* ===================== TITLE ===================== */
+.title{
+    font-size:95px;
+    line-height:.8;
+    text-align:center;
+    color:white;
+    font-weight:bold;
+    text-shadow:3px 3px 0 #4b1700, 5px 5px 12px rgba(0,0,0,.5);
+}
+
+/* ===================== PLAY BUTTON ===================== */
+.play-btn{
+    width:130px;
+    height:130px;
+    border:none;
+    border-radius:50%;
+    background:#9cdc45;
+    color:white;
+    font-size:55px;
+    cursor:pointer;
+    margin-top:40px;
+    box-shadow:0 10px 0 #5d8d21, 0 15px 20px rgba(0,0,0,.3);
+}
+
+/* ===================== MENU ===================== */
+.menu-box{
+    background:#ead9a2;
+    padding:40px;
+    border-radius:35px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:25px;
+    box-shadow:0 8px 0 #d8c48c;
+}
+
+.menu-btn{
+    width:290px;
+    padding:18px;
+    border:none;
+    border-radius:20px;
+    background:#9cdc45;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 6px 0 #5d8d21;
+}
+
+/* ===================== DIFFICULTY ===================== */
+.difficulty{
+    display:flex;
+    gap:15px;
+}
+
+.diff-btn{
+    width:110px;
+    height:45px;
+    border:none;
+    border-radius:20px;
+    background:#9cdc45;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 5px 0 #5d8d21;
+}
+
+.diff-btn.active{
+    border:3px solid white;
+}
+
+/* ===================== GAME ===================== */
+.pause-btn{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:75px;
+    height:75px;
+    border:none;
+    border-radius:20px;
+    background:#9cdc45;
+    color:white;
+    font-size:32px;
+    cursor:pointer;
+}
+
+.status{
+    font-size:30px;
+    color:white;
+    font-weight:bold;
+    margin-bottom:20px;
+    text-shadow:2px 2px 5px rgba(0,0,0,.4);
+}
+
+/* ===================== BOARD ===================== */
+.board{
+    display:grid;
+    grid-template-columns:repeat(3,120px);
+    gap:10px;
+    background:#7c4315;
+    padding:15px;
+    border-radius:25px;
+}
+
+.cell{
+    width:120px;
+    height:120px;
+    background:#dca05f;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:65px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.cell.X{ color:#d60000; }
+.cell.O{ color:#005eff; }
+
+/* ===================== SCOREBOARD ===================== */
+.scoreboard{
+    position:absolute;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:20px;
+    background:#ead9a2;
+    padding:12px 20px;
+    border-radius:20px;
+    box-shadow:0 6px 0 #d8c48c;
+    font-weight:bold;
+    font-size:18px;
+    color:#4b1700;
+}
+
+.score-box{
+    padding:5px 10px;
+    background:#fff3d1;
+    border-radius:10px;
+}
+
+/* ===================== OVERLAY ===================== */
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.overlay.active{ display:flex; }
+
+.overlay-box{
+    background:#ead9a2;
+    padding:40px;
+    border-radius:35px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HOME -->
+    <div id="home-screen" class="screen active">
+        <div class="title">TIC<br>TAC<br>TOE</div>
+        <button id="play-btn" class="play-btn">▶</button>
+        <div class="brand">Abdensa Game Go</div>
+    </div>
+
+    <!-- MODE -->
+    <div id="mode-screen" class="screen">
+        <div class="menu-box">
+
+            <button id="pvp-btn" class="menu-btn">👥 Player vs Player</button>
+            <button id="ai-btn" class="menu-btn">🤖 Player vs A.I.</button>
+
+            <div class="difficulty">
+                <button class="diff-btn active" data-level="easy">Easy</button>
+                <button class="diff-btn" data-level="medium">Medium</button>
+                <button class="diff-btn" data-level="hard">Hard</button>
+            </div>
+
+            <button id="back-btn" class="menu-btn">← Back</button>
+        </div>
+    </div>
+
+    <!-- GAME -->
+    <div id="game-screen" class="screen">
+
+        <button id="pause-btn" class="pause-btn">⏸</button>
+
+        <div id="status" class="status">Player X Turn</div>
+
+        <div id="board" class="board"></div>
+
+        <!-- SCOREBOARD -->
+        <div class="scoreboard">
+            <div class="score-box">X: <span id="x-score">0</span></div>
+            <div class="score-box">O: <span id="o-score">0</span></div>
+            <div class="score-box">Draw: <span id="draw-score">0</span></div>
+        </div>
+
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="overlay" class="overlay">
+        <div class="overlay-box">
+            <button id="resume-btn" class="menu-btn">Resume</button>
+            <button id="restart-btn" class="menu-btn">Restart</button>
+            <button id="exit-btn" class="menu-btn">Exit</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
