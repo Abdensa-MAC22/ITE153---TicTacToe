@@ -8,6 +8,32 @@ let xScore = 0
 let oScore = 0
 let drawScore = 0
 
+// ================= MUSIC =================
+const bgMusic = new Audio("/static/sounds/Audio.mp3")
+bgMusic.loop = true
+bgMusic.volume = 0.2
+
+let musicStarted = false
+
+// start music on FIRST interaction
+document.addEventListener("click", () => {
+    if (!musicStarted) {
+        bgMusic.play()
+        musicStarted = true
+    }
+}, { once: true })
+
+// ================= SOUND EFFECTS =================
+const clickSound = new Audio("/static/sounds/click.mp3")
+const winSound = new Audio("/static/sounds/win.mp3")
+const loseSound = new Audio("/static/sounds/lose.mp3")
+const drawSound = new Audio("/static/sounds/draw.mp3")
+
+clickSound.volume = 0.6
+winSound.volume = 0.8
+loseSound.volume = 0.8
+drawSound.volume = 0.7
+
 // ================= ELEMENTS =================
 const homeScreen = document.getElementById('home-screen')
 const modeScreen = document.getElementById('mode-screen')
@@ -111,6 +137,9 @@ async function handleMove(i){
 
     if(board[i] || gameOver) return
 
+    clickSound.currentTime = 0
+playSound(clickSound)
+
     board[i] = currentPlayer
     renderBoard()
 
@@ -143,6 +172,11 @@ async function handleMove(i){
     }
 }
 
+function playSound(sound){
+    sound.currentTime = 0
+    sound.play()
+}
+
 
 // ================= CHECK GAME =================
 async function checkGame(){
@@ -155,34 +189,37 @@ async function checkGame(){
 
     const data = await res.json()
 
-    if(data.result){
+if(data.result){
 
-        gameOver = true
+    gameOver = true
 
-        // ================= SCORE UPDATE =================
-        if(data.result === 'X'){
-            xScore++
-            statusEl.textContent = 'X Wins!'
-        }
-        else if(data.result === 'O'){
-            oScore++
-            statusEl.textContent =
-                gameMode === 'ai' ? 'A.I Wins!' : 'O Wins!'
-        }
-        else{
-            drawScore++
-            statusEl.textContent = 'Draw!'
-        }
-
-        updateScoreboard()
-
-        // ================= AUTO RESTART (KEEP SCORES) =================
-        setTimeout(() => {
-            resetGame(false)
-        }, 1200)
-
-        return true
+    if(data.result === 'X'){
+        xScore++
+        statusEl.textContent = 'X Wins!'
+        winSound.play()
     }
+
+    else if(data.result === 'O'){
+        oScore++
+        statusEl.textContent =
+            gameMode === 'ai' ? 'A.I Wins!' : 'O Wins!'
+        loseSound.play()
+    }
+
+    else{
+        drawScore++
+        statusEl.textContent = 'Draw!'
+        drawSound.play()
+    }
+
+    updateScoreboard()
+
+    setTimeout(() => {
+        resetGame(false)
+    }, 1200)
+
+    return true
+}
 
     return false
 }

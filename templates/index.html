@@ -11,6 +11,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
 }
 
 body{
@@ -18,21 +19,43 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-family:Arial;
-    background:#b9652d;
+    background:#05060a;
     overflow:hidden;
 }
 
+/* ===================== CYBER GLOW BACKGROUND ===================== */
+body::before{
+    content:'';
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle,#00f5ff33,#0000);
+    top:-200px;
+    left:-200px;
+    filter:blur(60px);
+}
+
+body::after{
+    content:'';
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle,#ff00ff33,#0000);
+    bottom:-200px;
+    right:-200px;
+    filter:blur(60px);
+}
+
+/* ===================== CONTAINER ===================== */
 .container{
     width:100%;
-    max-width:700px;
+    max-width:720px;
     height:100vh;
     position:relative;
-
-    background:
-    linear-gradient(rgba(255,255,255,.03), rgba(0,0,0,.03)),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.03), rgba(0,0,0,.03) 2px, transparent 2px, transparent 80px),
-    #b9652d;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    box-shadow:0 0 40px rgba(0,255,255,0.15);
 }
 
 /* ===================== SCREENS ===================== */
@@ -45,106 +68,102 @@ body{
     align-items:center;
 }
 
-.screen.active{ display:flex; }
-
-/* ===================== TOP BAR ===================== */
-.top-bar{
-    position:absolute;
-    top:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:260px;
-    background:#ead9a2;
-    padding:18px;
-    border-radius:0 0 25px 25px;
+.screen.active{
     display:flex;
-    justify-content:center;
-    gap:20px;
-    box-shadow:0 6px 0 #d8c48c;
-}
-
-.top-btn{
-    width:55px;
-    height:55px;
-    border:none;
-    border-radius:15px;
-    background:#9cdc45;
-    color:white;
-    font-size:24px;
-    cursor:pointer;
-    box-shadow:0 5px 0 #5d8d21;
 }
 
 /* ===================== TITLE ===================== */
 .title{
-    font-size:95px;
-    line-height:.8;
+    font-size:88px;
+    line-height:0.9;
     text-align:center;
-    color:white;
+    font-weight:900;
+    color:#00f5ff;
+    text-shadow:0 0 10px #00f5ff, 0 0 40px #00f5ff;
+    letter-spacing:4px;
+}
+
+/* ===================== BRAND ===================== */
+.brand{
+    margin-top:20px;
+    color:#ff00ff;
     font-weight:bold;
-    text-shadow:3px 3px 0 #4b1700, 5px 5px 12px rgba(0,0,0,.5);
+    letter-spacing:2px;
+    text-shadow:0 0 10px #ff00ff;
+}
+
+/* ===================== BUTTON EFFECT ===================== */
+button{
+    transition:0.2s ease;
+}
+
+button:hover{
+    transform:scale(1.05);
 }
 
 /* ===================== PLAY BUTTON ===================== */
 .play-btn{
-    width:130px;
-    height:130px;
-    border:none;
-    border-radius:50%;
-    background:#9cdc45;
-    color:white;
-    font-size:55px;
-    cursor:pointer;
+    width:120px;
+    height:120px;
     margin-top:40px;
-    box-shadow:0 10px 0 #5d8d21, 0 15px 20px rgba(0,0,0,.3);
+    border-radius:50%;
+    border:2px solid #00f5ff;
+    background:transparent;
+    color:#00f5ff;
+    font-size:50px;
+    cursor:pointer;
+    box-shadow:0 0 25px #00f5ff;
 }
 
 /* ===================== MENU ===================== */
 .menu-box{
-    background:#ead9a2;
     padding:40px;
-    border-radius:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
     display:flex;
     flex-direction:column;
-    align-items:center;
-    gap:25px;
-    box-shadow:0 8px 0 #d8c48c;
+    gap:20px;
 }
 
+/* ===================== MENU BUTTON ===================== */
 .menu-btn{
-    width:290px;
-    padding:18px;
-    border:none;
-    border-radius:20px;
-    background:#9cdc45;
-    color:white;
-    font-size:22px;
+    width:280px;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid #00f5ff;
+    background:transparent;
+    color:#00f5ff;
     font-weight:bold;
     cursor:pointer;
-    box-shadow:0 6px 0 #5d8d21;
+    box-shadow:0 0 10px #00f5ff22;
+}
+
+.menu-btn:hover{
+    box-shadow:0 0 20px #00f5ff;
 }
 
 /* ===================== DIFFICULTY ===================== */
 .difficulty{
     display:flex;
-    gap:15px;
+    gap:10px;
 }
 
 .diff-btn{
-    width:110px;
-    height:45px;
-    border:none;
-    border-radius:20px;
-    background:#9cdc45;
-    color:white;
-    font-size:16px;
+    flex:1;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #ff00ff;
+    background:transparent;
+    color:#ff00ff;
     font-weight:bold;
     cursor:pointer;
-    box-shadow:0 5px 0 #5d8d21;
 }
 
 .diff-btn.active{
-    border:3px solid white;
+    background:#ff00ff22;
+    box-shadow:0 0 15px #ff00ff;
 }
 
 /* ===================== GAME ===================== */
@@ -152,49 +171,64 @@ body{
     position:absolute;
     top:20px;
     right:20px;
-    width:75px;
-    height:75px;
-    border:none;
-    border-radius:20px;
-    background:#9cdc45;
-    color:white;
-    font-size:32px;
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    border:1px solid #00f5ff;
+    background:transparent;
+    color:#00f5ff;
+    font-size:24px;
     cursor:pointer;
+    box-shadow:0 0 15px #00f5ff33;
 }
 
 .status{
-    font-size:30px;
-    color:white;
-    font-weight:bold;
     margin-bottom:20px;
-    text-shadow:2px 2px 5px rgba(0,0,0,.4);
+    color:#00f5ff;
+    font-size:28px;
+    font-weight:bold;
+    text-shadow:0 0 10px #00f5ff;
 }
 
 /* ===================== BOARD ===================== */
 .board{
     display:grid;
-    grid-template-columns:repeat(3,120px);
+    grid-template-columns:repeat(3,110px);
     gap:10px;
-    background:#7c4315;
     padding:15px;
-    border-radius:25px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.1);
 }
 
 .cell{
-    width:120px;
-    height:120px;
-    background:#dca05f;
-    border-radius:15px;
+    width:110px;
+    height:110px;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:65px;
+    font-size:60px;
     font-weight:bold;
     cursor:pointer;
+    border-radius:12px;
+    background:rgba(0,0,0,0.4);
+    border:1px solid rgba(255,255,255,0.1);
+    transition:0.2s;
 }
 
-.cell.X{ color:#d60000; }
-.cell.O{ color:#005eff; }
+.cell:hover{
+    box-shadow:0 0 15px #00f5ff;
+}
+
+.cell.X{
+    color:#00f5ff;
+    text-shadow:0 0 10px #00f5ff;
+}
+
+.cell.O{
+    color:#ff00ff;
+    text-shadow:0 0 10px #ff00ff;
+}
 
 /* ===================== SCOREBOARD ===================== */
 .scoreboard{
@@ -203,41 +237,43 @@ body{
     left:50%;
     transform:translateX(-50%);
     display:flex;
-    gap:20px;
-    background:#ead9a2;
-    padding:12px 20px;
-    border-radius:20px;
-    box-shadow:0 6px 0 #d8c48c;
-    font-weight:bold;
-    font-size:18px;
-    color:#4b1700;
+    gap:15px;
+    padding:10px 20px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    color:white;
 }
 
 .score-box{
     padding:5px 10px;
-    background:#fff3d1;
-    border-radius:10px;
+    border-radius:8px;
+    border:1px solid #00f5ff;
 }
 
 /* ===================== OVERLAY ===================== */
 .overlay{
     position:absolute;
     inset:0;
-    background:rgba(0,0,0,.5);
     display:none;
     justify-content:center;
     align-items:center;
+    background:rgba(0,0,0,0.6);
 }
 
-.overlay.active{ display:flex; }
+.overlay.active{
+    display:flex;
+}
 
 .overlay-box{
-    background:#ead9a2;
-    padding:40px;
-    border-radius:35px;
+    padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
     display:flex;
     flex-direction:column;
-    gap:20px;
+    gap:15px;
 }
 </style>
 </head>
@@ -249,8 +285,8 @@ body{
     <!-- HOME -->
     <div id="home-screen" class="screen active">
         <div class="title">TIC<br>TAC<br>TOE</div>
-        <button id="play-btn" class="play-btn">▶</button>
-        <div class="brand">Abdensa Game Go</div>
+        <button id="play-btn" class="play-btn"> ▶</button>
+        <div class="brand">Abdensa & Hosni; Game Go</div>
     </div>
 
     <!-- MODE -->
